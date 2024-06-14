@@ -1,4 +1,4 @@
-            - name: golang-govulncheck-action
+            - name: govulncheck
   # You may pin to the exact commit or the version.
   # uses: golang/govulncheck-action@7da72f730e37eeaad891fcff0a532d27ed737cd4
   uses: golang/govulncheck-action@v1.0.3
