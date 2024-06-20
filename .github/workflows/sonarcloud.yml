@@ -50,7 +50,7 @@ jobs:
           version: v1.59.1
           # The installation mode `goinstall` always uses `CGO_ENABLED=1`.
           install-mode: goinstall
-          args: "--timeout=10mh --out-format checkstyle > report.xml"
+          args: "--timeout=10m --out-format checkstyle > report.xml"
 
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
