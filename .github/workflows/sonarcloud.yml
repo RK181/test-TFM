@@ -65,11 +65,12 @@ jobs:
 
           tar --no-same-owner -xzf "${GOLINTERS_TGZ}" --strip-components 1
           install golangci-lint $(go env GOPATH)/bin
+          $(go env GOPATH)/bin/golangci-lint run --out-format checkstyle > report.xml
         shell: bash
 
-      - name: Run golangci-lint
-        run: $(go env GOPATH)/bin/golangci-lint run --out-format checkstyle > report.xml
-        shell: bash
+      #- name: Run golangci-lint
+       # run: $(go env GOPATH)/bin/golangci-lint run --out-format checkstyle > report.xml
+        #shell: bash
 
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
