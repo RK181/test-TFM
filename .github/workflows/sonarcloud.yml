@@ -44,33 +44,13 @@ jobs:
         with:
           args: "-no-fail -fmt=sonarqube -out report.json ./..."
 
-      - name: Install golangci-lint
-        run: |
-          GOLINTERS_URL_PREFIX="https://github.com/golangci/golangci-lint/releases/download/v${GOLINTERS_VERSION}/"
-          GOLINTERS_TGZ="golangci-lint-${GOLINTERS_VERSION}-${GOLINTERS_ARCH}.tar.gz"
-          GOLINTERS_EXPECTED_DGST="${GOLINTERS_TGZ_DGST} *${GOLINTERS_TGZ}"
-          DGST_CMD="${OPENSSL_DGST_CMD} ${GOLINTERS_TGZ}"
-
-          cd $(mktemp -d /tmp/golinters.XXXXX)
-          ${CURL_CMD} "${GOLINTERS_URL_PREFIX}${GOLINTERS_TGZ}" --output ${GOLINTERS_TGZ}
-
-          GOLINTERS_GOT_DGST=$(${DGST_CMD})
-          if [ "${GOLINTERS_GOT_DGST}" != "${GOLINTERS_EXPECTED_DGST}" ]
-          then
-            echo "Digest of tarball is not equal to expected digest."
-            echo "Expected digest: " "${GOLINTERS_EXPECTED_DGST}"
-            echo "Got digest:      " "${GOLINTERS_GOT_DGST}"
-            exit 1
-          fi
-
-          tar --no-same-owner -xzf "${GOLINTERS_TGZ}" --strip-components 1
-          install golangci-lint $(go env GOPATH)/bin
-          $(go env GOPATH)/bin/golangci-lint run --out-format checkstyle > report.xml
-        shell: bash
-
-      #- name: Run golangci-lint
-       # run: $(go env GOPATH)/bin/golangci-lint run --out-format checkstyle > report.xml
-        #shell: bash
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.59.1
+          # The installation mode `goinstall` always uses `CGO_ENABLED=1`.
+          install-mode: goinstall
+          args: --timeout=10mh --out-format checkstyle > report.xml
 
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
