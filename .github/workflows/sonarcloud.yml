@@ -31,9 +31,9 @@ jobs:
           go test -coverprofile=./cov.out ./...
 
       - name: Run Gosec Security Scanner
-        run: |
-          go get github.com/securego/gosec/cmd/gosec
-          gosec -no-fail -fmt=sonarqube -out report.json ./...
+        uses: securego/gosec@master
+        with:
+          args: "-no-fail -fmt=sonarqube -out report.json ./..."
 
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
