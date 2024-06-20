@@ -28,9 +28,6 @@
 
 name: SonarCloud analysis
 
-# Revoke default permissions.
-permissions: {}
-
 on:
   workflow_dispatch:
   push:
