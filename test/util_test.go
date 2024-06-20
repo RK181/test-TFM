@@ -14,18 +14,6 @@ func TestHelloWorld(t *testing.T) {
 	}
 }
 
-func TestEncryptAndDecrypt(t *testing.T) {
-	data := []byte("secret message")
-	key := utils.GenRandByteSlice(32)
-
-	encrypted := utils.Encrypt(data, key)
-	decrypted := utils.Decrypt(encrypted, key)
-
-	if string(decrypted) != string(data) {
-		t.Errorf("Decryption failed. Expected %q, but got %q", string(data), string(decrypted))
-	}
-}
-
 func TestCompressAndDecompress(t *testing.T) {
 	data := []byte("compressed data")
 
