@@ -19,11 +19,11 @@
 name: Snyk Security
 
 on:
+  workflow_dispatch:
   push:
     branches: ["master" ]
   pull_request:
     branches: ["master"]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -42,7 +42,7 @@ jobs:
         # In this case we want to upload the SAST issues to GitHub Code Scanning
         uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
         
-      - uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7
+      - uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
         with:
           go-version: 1.22.x
           check-latest: true
@@ -53,11 +53,11 @@ jobs:
         # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
         # Use || true to not fail the pipeline
       - name: Snyk Code test
-        run: SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} snyk code test --sarif > snyk-code.sarif
+        run: SNYK_TOKEN=${{ env.SNYK_TOKEN }} snyk code test --sarif > snyk-code.sarif
 
         # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
       - name: Snyk Open Source monitor
-        run: SNYK_TOKEN=${{ secrets.SNYK_TOKEN }} snyk monitor --all-projects
+        run: SNYK_TOKEN=$${{ env.SNYK_TOKEN }} snyk monitor --all-projects
 
         # Push the Snyk Code results into GitHub Code Scanning tab
       - name: Upload result to GitHub Code Scanning
