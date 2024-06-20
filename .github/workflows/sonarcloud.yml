@@ -38,16 +38,15 @@ jobs:
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
         # uses: SonarSource/sonarcloud-github-action@v2.3.0
-        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        uses: SonarSource/sonarcloud-github-action@v2.3.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
         with:
           # Additional arguments for the SonarScanner CLI
-          args:
-            # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
-            # mandatory
+          args: >
             -Dsonar.projectKey="RK181_test-TFM"
             -Dsonar.organization="rk181"
+            -Dsonar.projectName="test-TFM"
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
             -Dsonar.test.inclusions=**/*_test.go
