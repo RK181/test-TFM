@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"bytes"
@@ -19,6 +19,10 @@ func chk(e error) {
 	if e != nil {
 		panic(e)
 	}
+}
+
+func HelloWorld() string {
+	return "hello world"
 }
 
 // función para cifrar (AES-CTR 256), adjunta el IV al principio
