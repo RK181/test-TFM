@@ -1,4 +1,7 @@
-package main
+/*
+Funciones comunes y utilidades
+*/
+package utils
 
 import (
 	"bytes"
@@ -21,11 +24,6 @@ func chk(e error) {
 	}
 }
 
-func HelloWorld() string {
-	return "hello world"
-}
-
-/*
 // función para cifrar (AES-CTR 256), adjunta el IV al principio
 func Encrypt(data, key []byte) (out []byte) {
 	out = make([]byte, len(data)+16)    // reservamos espacio para el IV al principio
@@ -45,27 +43,27 @@ func Decrypt(data, key []byte) (out []byte) {
 	ctr := cipher.NewCTR(blk, data[:16]) // cifrador en flujo: modo CTR, usa IV
 	ctr.XORKeyStream(out, data[16:])     // desciframos (doble cifrado) los datos
 	return
-}*/
+}
 
 // función para comprimir
 func Compress(data []byte) []byte {
 	var b bytes.Buffer      // b contendrá los datos comprimidos (tamaño variable)
 	w := zlib.NewWriter(&b) // escritor que comprime sobre b
-	_, err := w.Write(data) // escribimos los datos
-	chk(err)                // comprobamos el error
+	w.Write(data)           // escribimos los datos
 	w.Close()               // cerramos el escritor (buffering)
 	return b.Bytes()        // devolvemos los datos comprimidos
 }
 
 // función para descomprimir
 func Decompress(data []byte) []byte {
-	var b bytes.Buffer                              // b contendrá los datos descomprimidos
+	var b bytes.Buffer // b contendrá los datos descomprimidos
+
 	r, err := zlib.NewReader(bytes.NewReader(data)) // lector descomprime al leer
-	chk(err)                                        // comprobamos el error
-	_, err = io.Copy(&b, r)                         // copiamos del descompresor (r) al buffer (b)
-	chk(err)                                        // comprobamos el error
-	r.Close()                                       // cerramos el lector (buffering)
-	return b.Bytes()                                // devolvemos los datos descomprimidos
+
+	chk(err)         // comprobamos el error
+	io.Copy(&b, r)   // copiamos del descompresor (r) al buffer (b)
+	r.Close()        // cerramos el lector (buffering)
+	return b.Bytes() // devolvemos los datos descomprimidos
 }
 
 // función para codificar de []bytes a string (Base64)
@@ -139,10 +137,8 @@ func Hash512_esponja(data []byte, function, passphrase []byte) []byte {
 	// Compute a 64-byte hash of data and put it in 'hash'.
 	sha3.ShakeSum256(hash, data)
 	c1 := sha3.NewCShake256(function, passphrase)
-	_, err := c1.Write(data)
-	chk(err)
-	_, err = c1.Read(hash)
-	chk(err)
+	c1.Write(data)
+	c1.Read(hash)
 
 	return hash
 }
@@ -154,8 +150,7 @@ func Hash512_esponja(data []byte, function, passphrase []byte) []byte {
 // función para cifrar (AES-CTR 256), adjunta el IV al principio
 func EncryptAesCtr(data, key []byte) (out []byte) {
 	out = make([]byte, len(data)+16)    // reservamos espacio para el IV al principio
-	_, err := rand.Read(out[:16])       // generamos el IV
-	chk(err)                            // comprobamos el error
+	rand.Read(out[:16])                 // generamos el IV
 	blk, err := aes.NewCipher(key)      // cifrador en bloque (AES), usa key
 	chk(err)                            // comprobamos el error
 	ctr := cipher.NewCTR(blk, out[:16]) // cifrador en flujo: modo CTR, usa IV
