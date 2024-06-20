@@ -1,7 +1,7 @@
 /*
 Funciones comunes y utilidades
 */
-package utils
+package main
 
 import (
 	"bytes"
