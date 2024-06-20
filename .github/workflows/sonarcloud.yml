@@ -34,9 +34,9 @@ permissions: {}
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "master1" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master1" ]
 
 permissions:
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
