@@ -44,9 +44,7 @@ jobs:
         with:
           # Additional arguments for the SonarScanner CLI
           args: >
-            -Dsonar.projectKey="RK181_test-TFM"
-            -Dsonar.organization="rk181"
-            -Dsonar.projectName="test-TFM"
+            -Dsonar.projectName=test-TFM
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
             -Dsonar.test.inclusions=**/*_test.go
