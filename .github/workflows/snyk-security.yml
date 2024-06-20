@@ -18,6 +18,9 @@
 
 name: Snyk Security
 
+# Revoke default permissions.
+permissions: {}
+
 on:
   workflow_dispatch:
   push:
