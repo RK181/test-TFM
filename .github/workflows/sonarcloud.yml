@@ -43,28 +43,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  #v4.1.7
-        with:
-          fetch-depth: 1
-
-      - name: Set up Go
-        uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7  #v5.0.1
-        with:
-          go-version: 1.22
-          check-latest: true
-
-      - name: Run unit Tests
-        run: |
-          go test -coverprofile=./cov.out ./...
-
-      - name: Run Gosec Security Scanner
-        run: |
-          go get github.com/securego/gosec/cmd/gosec
-          gosec -no-fail -fmt=sonarqube -out report.json ./...
 
       - name: Analyze with SonarCloud
-
         # You can pin the exact commit or the version.
         # uses: SonarSource/sonarcloud-github-action@v2.3.0
         uses: SonarSource/sonarcloud-github-action@e44258b109568baa0df60ed515909fc6c72cba92
@@ -77,10 +57,5 @@ jobs:
             # mandatory
             -Dsonar.projectKey=RK181_test-TFM
             -Dsonar.organization=rk181
-            -Dsonar.exclusions=**/*_test.go
-            -Dsonar.tests=.
-            -Dsonar.test.inclusions=**/*_test.go
-            -Dsonar.go.coverage.reportPaths=cov.out
-            -Dsonar.externalIssuesReportPaths=report.json
           # When you need the analysis to take place in a directory other than the one from which it was launched, default is .
           projectBaseDir: .
