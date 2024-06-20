@@ -68,7 +68,7 @@ jobs:
         shell: bash
 
       - name: Run golangci-lint
-        run: $(go env GOPATH)/bin/golangci-lint run --timeout="${GOLINTERS_TIMEOUT}" --out-format checkstyle > report.xml
+        run: $(go env GOPATH)/bin/golangci-lint run --out-format checkstyle > report.xml
         shell: bash
 
       - name: Analyze with SonarCloud
