@@ -141,7 +141,8 @@ func Hash512_esponja(data []byte, function, passphrase []byte) []byte {
 	c1 := sha3.NewCShake256(function, passphrase)
 	_, err := c1.Write(data)
 	chk(err)
-	c1.Read(hash)
+	_, err = c1.Read(hash)
+	chk(err)
 
 	return hash
 }
