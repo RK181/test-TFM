@@ -44,7 +44,6 @@ jobs:
         with:
           # Additional arguments for the SonarScanner CLI
           args: >
-            -Dsonar.projectName=test-TFM
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
             -Dsonar.test.inclusions=**/*_test.go
