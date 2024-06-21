@@ -27,7 +27,8 @@ func chk(e error) {
 // función para cifrar (AES-CTR 256), adjunta el IV al principio
 func Encrypt(data, key []byte) (out []byte) {
 	out = make([]byte, len(data)+16)    // reservamos espacio para el IV al principio
-	rand.Read(out[:16])                 // generamos el IV
+	_, err := rand.Read(out[:16])       // generamos el IV
+	chk(err)                            // comprobamos el error
 	blk, err := aes.NewCipher(key)      // cifrador en bloque (AES), usa key
 	chk(err)                            // comprobamos el error
 	ctr := cipher.NewCTR(blk, out[:16]) // cifrador en flujo: modo CTR, usa IV
