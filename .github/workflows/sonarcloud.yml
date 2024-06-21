@@ -44,14 +44,14 @@ jobs:
         with:
           args: "-no-fail -fmt=sonarqube -out report.json ./..."
 
-      - name: golangci-lint
+      - name: Run linters (Golangci-lint)
+        continue-on-error: true
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.59.1
           # The installation mode `goinstall` always uses `CGO_ENABLED=1`.
           install-mode: goinstall
           args: "--timeout=10m --out-format checkstyle > report.xml"
-          continue-on-error: true
 
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
