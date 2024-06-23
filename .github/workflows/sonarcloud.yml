@@ -1,5 +1,8 @@
 name: SonarCloud analysis
 
+# Revoke default permissions and grant what's needed in each job.
+permissions: {}
+
 on:
   workflow_dispatch:
   push:
@@ -15,13 +18,13 @@ env:
   GOLINTERS_TIMEOUT: 15m
   OPENSSL_DGST_CMD: openssl dgst -sha256 -r
   CURL_CMD: curl --proto =https --tlsv1.2 --location --silent --show-error --fail
-  
-permissions:
-  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
 
 jobs:
   Analysis:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
 
     steps:
       - name: Checkout source
@@ -68,5 +71,3 @@ jobs:
             -Dsonar.go.coverage.reportPaths=cov.out
             -Dsonar.externalIssuesReportPaths=report.json
             -Dsonar.go.golangci-lint.reportPaths=report.xml
-          # When you need the analysis to take place in a directory other than the one from which it was launched, default is .
-         # projectBaseDir: .
