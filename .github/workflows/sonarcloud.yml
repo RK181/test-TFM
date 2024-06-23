@@ -12,12 +12,6 @@ on:
 
 env:
   GO_VERSION: '1.22'
-  GOLINTERS_VERSION: 1.59.1
-  GOLINTERS_ARCH: linux-amd64
-  GOLINTERS_TGZ_DGST: c30696f1292cff8778a495400745f0f9c0406a3f38d8bb12cef48d599f6c7791
-  GOLINTERS_TIMEOUT: 15m
-  OPENSSL_DGST_CMD: openssl dgst -sha256 -r
-  CURL_CMD: curl --proto =https --tlsv1.2 --location --silent --show-error --fail
 
 jobs:
   Analysis:
@@ -49,7 +43,7 @@ jobs:
 
       - name: Run linters (Golangci-lint)
         continue-on-error: true
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 #v6.0.1
         with:
           version: v1.59.1
           # The installation mode `goinstall` always uses `CGO_ENABLED=1`.
@@ -59,7 +53,7 @@ jobs:
       - name: Analyze with SonarCloud
         # You can pin the exact commit or the version.
         # uses: SonarSource/sonarcloud-github-action@v2.3.0
-        uses: SonarSource/sonarcloud-github-action@v2.3.0
+        uses: SonarSource/sonarcloud-github-action@e44258b109568baa0df60ed515909fc6c72cba92 #v2.3.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
         with:
