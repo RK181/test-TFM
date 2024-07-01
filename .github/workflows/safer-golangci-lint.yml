@@ -32,41 +32,15 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - name: Checkout source
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: Run linters (Golangci-lint)
+        continue-on-error: true
+        uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 #v6.0.1
         with:
-          fetch-depth: 1
-
-      - name: Setup Go
-        uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
+          version: v1.59.1
+          # The installation mode `goinstall` always uses `CGO_ENABLED=1`.
+          install-mode: goinstall
+          args: "--timeout=10m --out-format checkstyle > golangci.sarif"
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@1b1aada464948af03b950897e5eb522f92603cc2 # v3.24.9
         with:
-          go-version: ${{ env.GO_VERSION }}
-          check-latest: true
-
-      - name: Install golangci-lint
-        run: |
-          GOLINTERS_URL_PREFIX="https://github.com/golangci/golangci-lint/releases/download/v${GOLINTERS_VERSION}/"
-          GOLINTERS_TGZ="golangci-lint-${GOLINTERS_VERSION}-${GOLINTERS_ARCH}.tar.gz"
-          GOLINTERS_EXPECTED_DGST="${GOLINTERS_TGZ_DGST} *${GOLINTERS_TGZ}"
-          DGST_CMD="${OPENSSL_DGST_CMD} ${GOLINTERS_TGZ}"
-
-          cd $(mktemp -d /tmp/golinters.XXXXX)
-          ${CURL_CMD} "${GOLINTERS_URL_PREFIX}${GOLINTERS_TGZ}" --output ${GOLINTERS_TGZ}
-
-          GOLINTERS_GOT_DGST=$(${DGST_CMD})
-          if [ "${GOLINTERS_GOT_DGST}" != "${GOLINTERS_EXPECTED_DGST}" ]
-          then
-            echo "Digest of tarball is not equal to expected digest."
-            echo "Expected digest: " "${GOLINTERS_EXPECTED_DGST}"
-            echo "Got digest:      " "${GOLINTERS_GOT_DGST}"
-            exit 1
-          fi
-
-          tar --no-same-owner -xzf "${GOLINTERS_TGZ}" --strip-components 1
-          install golangci-lint $(go env GOPATH)/bin
-        shell: bash
-
-      # Run required linters enabled in .golangci.yml (or default linters if yml doesn't exist)     
-      - name: Run golangci-lint
-        run: $(go env GOPATH)/bin/golangci-lint run --timeout="${GOLINTERS_TIMEOUT}"
-        shell: bash
+          sarif_file: golangci.sarif
