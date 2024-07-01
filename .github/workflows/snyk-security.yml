@@ -18,14 +18,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+      - uses: snyk/actions/golang@b98d498629f1c368650224d6d212bf7dfa89e4bf # v0.4.0
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/golang@b98d498629f1c368650224d6d212bf7dfa89e4bf # v0.4.0
         continue-on-error: true # To make sure that SARIF upload gets called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif
           command: test
+      - name: Run Snyk monitor
+        continue-on-error: true # To make sure that SARIF upload gets called
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@1b1aada464948af03b950897e5eb522f92603cc2 # v3.24.9
         with:
