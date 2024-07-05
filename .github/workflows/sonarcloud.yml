@@ -38,7 +38,7 @@ jobs:
           go test -coverprofile=./cov.out ./...
       - name: Run unit Tests Report
         run: |
-          go test ./... -json > test-report.out
+          go test ./... -json > go-test-report.out
 
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
@@ -69,7 +69,7 @@ jobs:
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
             -Dsonar.test.inclusions=**/*_test.go
-            -Dsonar.go.tests.reportPaths=test-report.out
+            -Dsonar.go.tests.reportPaths=go-test-report.out
             -Dsonar.go.coverage.reportPaths=cov.out
             -Dsonar.externalIssuesReportPaths=report.json
             -Dsonar.go.golangci-lint.reportPaths=report.xml
