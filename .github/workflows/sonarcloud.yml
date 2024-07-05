@@ -38,7 +38,7 @@ jobs:
           go test -coverprofile=./cov.out ./...
       - name: Run unit Tests Report
         run: |
-          go test **/*_test.go -json > test-report.out
+          go test ./... -json > test-report.out
 
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
@@ -63,6 +63,9 @@ jobs:
         with:
           # Additional arguments for the SonarScanner CLI
           args: >
+            -Dsonar.organization=rk181
+            -Dsonar.projectKey=RK181_test-TFM
+            -Dsonar.sources=.
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
             -Dsonar.test.inclusions=**/*_test.go
