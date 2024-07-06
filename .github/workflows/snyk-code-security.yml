@@ -4,11 +4,10 @@ name: SnykCode
 permissions: {}
 
 on:
-  
+  pull_request:
+    branches: [ "master" ]
   push:
-    branches: [ "master", "release-*", "hotfix-*" ]
-  #pull_request:
-  #  branches: [ "master"]
+    branches: [ "release-*", "hotfix-*" ]
 
 jobs:
   Analysis:

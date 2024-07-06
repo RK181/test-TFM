@@ -9,9 +9,10 @@ permissions: {}
 on:
   workflow_dispatch:
   pull_request:
+    branches: ["master1"]
   push:
     branches:
-      - 'master'
+      - 'master1'
       - 'release*'
     tags:
       - 'v*'  

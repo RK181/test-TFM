@@ -4,10 +4,13 @@ name: Snyk Open Source
 permissions: {}
 
 on:
-  #pull_request:
+  pull_request:
+    branches: [ "master" ]
   push:
-    branches: [ "master", "develop", "release-*", "hotfix-*" ]
-
+    branches: [ "develop", "release-*", "hotfix-*" ]
+  schedule:
+    - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC
+    
 jobs:
   Analysis:
     permissions:
