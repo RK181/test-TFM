@@ -16,11 +16,11 @@ permissions: {}
 
 on:
   pull_request:
-    branches: ["develop"]
+    branches: [ "master" ]
   push:
-    branches: [ "master", "develop", "release-*", "hotfix-*" ]
+    branches: [ "develop", "release-*", "hotfix-*" ]
   schedule:
-    - cron: '29 4 * * 1'
+    - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC
 
 jobs:
   Analysis:
