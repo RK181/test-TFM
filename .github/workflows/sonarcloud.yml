@@ -64,9 +64,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
         with:
           # Additional arguments for the SonarScanner CLI
+          
+          #  -Dsonar.organization=rk181
+          #  -Dsonar.projectKey=RK181_test-TFM
           args: >
-            -Dsonar.organization=rk181
-            -Dsonar.projectKey=RK181_test-TFM
             -Dsonar.sources=.
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
