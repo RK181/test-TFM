@@ -6,7 +6,7 @@ permissions: {}
 on:
   
   push:
-    branches: [ "master", "release-*", "hotfix-*" ]
+    branches: [ "release-*", "hotfix-*" ]
   #pull_request:
   #  branches: [ "master"]
 
