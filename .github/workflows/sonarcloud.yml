@@ -10,7 +10,7 @@ on:
   push:
     branches: [ "develop", "release-*", "hotfix-*" ]
   schedule:
-    - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC
+    - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC 
 
 env:
   GO_VERSION: '1.22'
@@ -64,9 +64,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
         with:
           # Additional arguments for the SonarScanner CLI
+          
+          #  -Dsonar.organization=rk181
+          #  -Dsonar.projectKey=RK181_test-TFM
           args: >
-            -Dsonar.organization=rk181
-            -Dsonar.projectKey=RK181_test-TFM
             -Dsonar.sources=.
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
@@ -75,3 +76,4 @@ jobs:
             -Dsonar.go.coverage.reportPaths=cov.out
             -Dsonar.externalIssuesReportPaths=report.json
             -Dsonar.go.golangci-lint.reportPaths=report.xml
+
