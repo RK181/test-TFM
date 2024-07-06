@@ -10,7 +10,7 @@ on:
   push:
     branches: [ "develop", "release-*", "hotfix-*" ]
   schedule:
-    - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC
+    - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC 
 
 env:
   GO_VERSION: '1.22'
