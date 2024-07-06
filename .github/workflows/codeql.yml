@@ -16,7 +16,7 @@ permissions: {}
 
 on:
   pull_request:
-    branches: ["master"]
+    branches: ["develop"]
   push:
     branches: [ "master", "develop", "release-*", "hotfix-*" ]
   schedule:
