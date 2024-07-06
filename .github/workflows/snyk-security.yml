@@ -4,7 +4,7 @@ name: Snyk Open-Source Security
 permissions: {}
 
 on:
-  pull_request:
+  #pull_request:
   push:
     branches: [ "master", "develop", "release-*", "hotfix-*" ]
 
