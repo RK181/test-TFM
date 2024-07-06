@@ -15,7 +15,8 @@ name: "CodeQL"
 permissions: {}
 
 on:
-  #pull_request:
+  pull_request:
+    branches: ["master"]
   push:
     branches: [ "master", "develop", "release-*", "hotfix-*" ]
   schedule:
