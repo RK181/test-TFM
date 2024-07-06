@@ -76,4 +76,3 @@ jobs:
             -Dsonar.go.coverage.reportPaths=cov.out
             -Dsonar.externalIssuesReportPaths=report.json
             -Dsonar.go.golangci-lint.reportPaths=report.xml
-            
