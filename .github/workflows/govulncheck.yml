@@ -18,7 +18,7 @@ on:
       - '**'
       - '!**.md'
     branches:
-      - ["master"]
+      - [ "master", "develop", "release-*", "hotfix-*" ]
     tags:
       - 'v*'
 
