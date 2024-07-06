@@ -4,10 +4,8 @@ name: SnykCode
 permissions: {}
 
 on:
-  pull_request:
-    branches: [ "master" ]
   push:
-    branches: [ "release-*", "hotfix-*" ]
+    branches: [ "master", "release-*", "hotfix-*" ]
 
 jobs:
   Analysis:
