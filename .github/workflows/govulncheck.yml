@@ -17,8 +17,7 @@ on:
     paths:
       - '**'
       - '!**.md'
-    branches:
-      - [ "master", "develop", "release-*", "hotfix-*" ]
+    branches: [ "master", "develop", "release-*", "hotfix-*" ]
     tags:
       - 'v*'
 

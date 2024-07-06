@@ -1,4 +1,4 @@
-name: Snyk Code Security
+name: SnykCode
 
 # Revoke default permissions and grant what's needed in each job.
 permissions: {}
@@ -6,11 +6,9 @@ permissions: {}
 on:
   
   push:
-    branches: 
-      - [ "master", "release-*", "hotfix-*" ]
-  pull_request:
-    branches: 
-      - [ "master"]
+    branches: [ "master", "release-*", "hotfix-*" ]
+  #pull_request:
+  #  branches: [ "master"]
 
 jobs:
   Analysis:

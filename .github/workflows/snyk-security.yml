@@ -1,13 +1,12 @@
-name: Snyk Open-Source Security
+name: Snyk Open Source
 
 # Revoke default permissions and grant what's needed in each job.
 permissions: {}
 
 on:
-  pull_request:
+  #pull_request:
   push:
-    branches: 
-      - [ "master", "develop", "release-*", "hotfix-*" ]
+    branches: [ "master", "develop", "release-*", "hotfix-*" ]
 
 jobs:
   Analysis:
