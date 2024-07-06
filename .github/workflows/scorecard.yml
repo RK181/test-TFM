@@ -16,10 +16,11 @@ on:
   schedule:
     - cron: '43 23 * * 0'
   push:
-    branches: [ "master" ]
+    branches: 
+      - [ "master", "develop", "release-*", "hotfix-*" ]
 
 jobs:
-  analysis:
+  Analysis:
     name: Scorecard analysis
     runs-on: ubuntu-latest
     permissions:
@@ -40,7 +41,7 @@ jobs:
       - name: "Run analysis"
         uses: ossf/scorecard-action@0864cf19026789058feabb7e87baa5f140aac736 # v2.3.1
         with:
-          results_file: results.sarif
+          results_file: scorecard.sarif
           results_format: sarif
           # (Optional) "write" PAT token. Uncomment the `repo_token` line below if:
           # - you want to enable the Branch-Protection check on a *public* repository, or
@@ -63,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@97a0fba1372883ab732affbe8f94b823f91727db # v3.pre.node20
         with:
           name: SARIF file
-          path: results.sarif
+          path: scorecard.sarif
           retention-days: 5
 
       # Upload the results to GitHub's code scanning dashboard (optional).
@@ -71,4 +72,4 @@ jobs:
       - name: "Upload to code-scanning"
         uses: github/codeql-action/upload-sarif@1b1aada464948af03b950897e5eb522f92603cc2 # v3.24.9
         with:
-          sarif_file: results.sarif
+          sarif_file: scorecard.sarif

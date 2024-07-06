@@ -5,10 +5,13 @@ permissions: {}
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
+  push:
+    branches: 
+      - [ "master", "develop", "release-*", "hotfix-*" ]
+  #pull_request:
+  #  branches: 
+   #   - [ "master", "develop", "release-*", "hotfix-*" ]
 
 env:
   GO_VERSION: '1.22'

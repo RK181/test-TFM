@@ -15,10 +15,10 @@ name: "CodeQL"
 permissions: {}
 
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
+  push:
+    branches: 
+      - [ "master", "develop", "release-*", "hotfix-*" ]
   schedule:
     - cron: '29 4 * * 1'
 

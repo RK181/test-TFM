@@ -1,13 +1,16 @@
-name: Snyk Open-Source Security
+name: Snyk Code Security
 
 # Revoke default permissions and grant what's needed in each job.
 permissions: {}
 
 on:
-  pull_request:
+  
   push:
     branches: 
-      - [ "master", "develop", "release-*", "hotfix-*" ]
+      - [ "master", "release-*", "hotfix-*" ]
+  pull_request:
+    branches: 
+      - [ "master"]
 
 jobs:
   Analysis:
@@ -24,18 +27,10 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --sarif-file-output=snyk.sarif
-          command: test # command checks projects for open-source vulnerabilities and license issues
-          
-      - name: Run Snyk monitor
-        uses: snyk/actions/golang@b98d498629f1c368650224d6d212bf7dfa89e4bf # v0.4.0
-        continue-on-error: true # To make sure that SARIF upload gets called
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor # send the results to snyk.io and continuously monitored for open-source vulnerabilities and license issues
+          args: --sarif-file-output=snyk-code.sarif #--report --project-name="PROJECT_NAME"
+          command: code test # command tests for any known security issues using Static Code Analysis.
           
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@1b1aada464948af03b950897e5eb522f92603cc2 # v3.24.9
         with:
-          sarif_file: snyk.sarif
+          sarif_file: snyk-code.sarif
