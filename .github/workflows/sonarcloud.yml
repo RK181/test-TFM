@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
   pull_request:
   push:
-    branches: 
-      - [ "master", "develop", "release-*", "hotfix-*" ]
+    branches: [ "master", "develop", "release-*", "hotfix-*" ]
   #pull_request:
   #  branches: 
    #   - [ "master", "develop", "release-*", "hotfix-*" ]

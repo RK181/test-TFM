@@ -6,11 +6,9 @@ permissions: {}
 on:
   
   push:
-    branches: 
-      - [ "master", "release-*", "hotfix-*" ]
+    branches: [ "master", "release-*", "hotfix-*" ]
   pull_request:
-    branches: 
-      - [ "master"]
+    branches: [ "master"]
 
 jobs:
   Analysis:

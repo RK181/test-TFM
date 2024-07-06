@@ -13,8 +13,7 @@ on:
   workflow_dispatch:
   pull_request:
   push:
-    branches: 
-      - [ "master", "develop", "release-*", "hotfix-*" ]
+    branches: [ "master", "develop", "release-*", "hotfix-*" ]
 
 env:
   GO_VERSION: '1.22'
