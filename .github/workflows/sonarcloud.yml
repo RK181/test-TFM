@@ -68,8 +68,6 @@ jobs:
           #  -Dsonar.organization=rk181
           #  -Dsonar.projectKey=RK181_test-TFM
           args: >
-            -Dsonar.organization=rk181
-            -Dsonar.projectKey=RK181_test-TFM
             -Dsonar.sources=.
             -Dsonar.exclusions=**/*_test.go
             -Dsonar.tests=.
