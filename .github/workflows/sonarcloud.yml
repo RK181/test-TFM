@@ -10,9 +10,6 @@ on:
   schedule:
     - cron: '0 4 * * 1' # Run on default branch "master" every Monday at 4:00 UTC 
 
-env:
-  GO_VERSION: '1.22'
-
 jobs:
   Analysis:
     runs-on: ubuntu-latest
@@ -30,12 +27,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7  #v5.0.1
         with:
-          go-version: ${{ env.GO_VERSION }}
+          go-version: 1.22
           check-latest: true
 
-      - name: Run unit Tests Cov
+      - name: Run unit Tests Coverage
         run: |
           go test -coverprofile=./cov.out ./...
+          
       - name: Run unit Tests Report
         run: |
           go test ./... -json > go-test-report.out
@@ -59,7 +57,7 @@ jobs:
         # uses: SonarSource/sonarcloud-github-action@v2.3.0
         uses: SonarSource/sonarcloud-github-action@e44258b109568baa0df60ed515909fc6c72cba92 #v2.3.0
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io
         with:
           # Additional arguments for the SonarScanner CLI
           
